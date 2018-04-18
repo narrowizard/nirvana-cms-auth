@@ -13,6 +13,7 @@ var (
 	TableUpdateError      = errors.InternalServerError.Build("Database:TableUpdateError", "table ${tableName} update error.")
 	UnexpectedParamError  = errors.BadRequest.Build("Params:UnexpectedParamError", "unexpected param: ${paramName}.")
 	PasswordNotMatchError = errors.Forbidden.Build("Login:PasswordNotMatchError", "password not match account.")
+	UserForbiddenError    = errors.Forbidden.Build("Login:UserForbiddenError", "user ${account} is forbidden login.")
 	SessionCreateError    = errors.InternalServerError.Build("Session:SessionCreateError", "session create error.")
 )
 
