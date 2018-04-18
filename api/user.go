@@ -47,5 +47,34 @@ var User = definition.Descriptor{
 				},
 			},
 		},
+		{
+			Path:        "/islogin",
+			Description: "check login status",
+			Definitions: []definition.Definition{
+				{
+					Method:   definition.Get,
+					Function: users.IsLogin,
+					Consumes: []string{definition.MIMEAll},
+					Produces: []string{definition.MIMEJSON},
+					Parameters: []definition.Parameter{
+						{
+							Source:      definition.Header,
+							Name:        "Cookie",
+							Description: "ssid",
+						},
+					},
+					Results: []definition.Result{
+						{
+							Destination: definition.Data,
+							Description: "whether login",
+						},
+						{
+							Destination: definition.Error,
+							Description: "error info",
+						},
+					},
+				},
+			},
+		},
 	},
 }
