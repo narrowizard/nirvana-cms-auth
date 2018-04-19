@@ -15,24 +15,26 @@ import (
 var db *gorm.DB
 var sessionContainer session.SessionContainer
 
-var configInfo = models.Config{
-	LoginExpire: 1800,
-	SessionName: "nirvana_cms_ssid",
-}
+var configInfo = models.Config{}
 
 func init() {
-	var cfg, err = config.NewConfig("ini", "./config/db.cfg")
+	var cfg, err = config.NewConfig("ini", "./config/config.cfg")
 	checkError(err)
 	connString, err := cfg.GlobalSection().String("ConnectionString")
 	checkError(err)
 	db, err = gorm.Open("mysql", connString)
 	checkError(err)
-	createDatabase()
+	redisConnString, err := cfg.GlobalSection().String("RedisConnString")
+	checkError(err)
+	configInfo.LoginExpire, err = cfg.GlobalSection().Int("LoginExpire")
+	checkError(err)
+	configInfo.SessionName, err = cfg.GlobalSection().String("SessionName")
+	checkError(err)
 	// 创建session处理器
-	var redisConnString = `{"Host":"10.0.0.11:6379","MaxIdle":10,"MaxActive":20,"IdleTimeout":60,"Wait":false,"DB":2,"Password":""}`
 	session.Register("redis", sessionext.NewRediSessionContainer)
 	sessionContainer, err = session.NewSessionContainer("redis", configInfo.LoginExpire, redisConnString)
 	checkError(err)
+	createDatabase()
 }
 
 func checkError(err error) {

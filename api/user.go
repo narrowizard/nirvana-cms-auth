@@ -48,6 +48,23 @@ var User = definition.Descriptor{
 			},
 		},
 		{
+			Path:        "/logout",
+			Description: "logout api, remove session info",
+			Definitions: []definition.Definition{
+				{
+					Method:   definition.Delete,
+					Function: users.Logout,
+					Consumes: []string{definition.MIMEAll},
+					Produces: []string{definition.MIMEJSON},
+					Results: []definition.Result{
+						{
+							Destination: definition.Error,
+						},
+					},
+				},
+			},
+		},
+		{
 			Path:        "/authorize",
 			Description: "check user privilege to specific url",
 			Definitions: []definition.Definition{

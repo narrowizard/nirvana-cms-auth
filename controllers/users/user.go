@@ -34,6 +34,7 @@ func Authorize(ctx context.Context, request string) (int, error) {
 	}
 	var us = services.NewUserService()
 	return uid, us.CheckURL(uid, request)
+	// return uid, nil
 }
 
 func IsLogin(ctx context.Context, ssid string) (bool, error) {
@@ -41,6 +42,23 @@ func IsLogin(ctx context.Context, ssid string) (bool, error) {
 	return succ, nil
 }
 
+func Logout(ctx context.Context) error {
+	var httpContext = service.HTTPContextFrom(ctx)
+	var c, err = httpContext.Request().Cookie(services.ConfigInfo().SessionName)
+	if err != nil {
+		log.Error(err)
+		return nil
+	}
+	var ssc = services.SessionContainer()
+	var ss, ok = ssc.Session(c.Value)
+	if !ok {
+		return nil
+	}
+	ss.Die()
+	return nil
+}
+
+// userID returns user id from session info
 func userID(ctx context.Context) (int, bool) {
 	var httpContext = service.HTTPContextFrom(ctx)
 	var c, err = httpContext.Request().Cookie(services.ConfigInfo().SessionName)
