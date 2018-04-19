@@ -13,7 +13,9 @@ var (
 	TableUpdateError      = errors.InternalServerError.Build("Database:TableUpdateError", "table ${tableName} update error.")
 	UnexpectedParamError  = errors.BadRequest.Build("Params:UnexpectedParamError", "unexpected param: ${paramName}.")
 	PasswordNotMatchError = errors.Forbidden.Build("Login:PasswordNotMatchError", "password not match account.")
-	UserForbiddenError    = errors.Forbidden.Build("Login:UserForbiddenError", "user ${account} is forbidden login.")
+	UserForbiddenError    = errors.Forbidden.Build("Login:UserForbiddenError", "user ${account} is forbidden to login.")
+	UnLoginError          = errors.Forbidden.Build("Login:UnLoginError", "need login.")
+	UnAuthorizedError     = errors.Forbidden.Build("Auth:UnAuthorizedError", "you are not allowed to this api.")
 	SessionCreateError    = errors.InternalServerError.Build("Session:SessionCreateError", "session create error.")
 )
 

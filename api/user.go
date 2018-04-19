@@ -48,6 +48,26 @@ var User = definition.Descriptor{
 			},
 		},
 		{
+			Path:        "/authorize",
+			Description: "check user privilege to specific url",
+			Definitions: []definition.Definition{
+				{
+					Method:   definition.Get,
+					Function: users.Authorize,
+					Consumes: []string{definition.MIMEAll},
+					Produces: []string{definition.MIMEJSON},
+					Parameters: []definition.Parameter{
+						{
+							Source:      definition.Query,
+							Name:        "request",
+							Description: "request url",
+						},
+					},
+					Results: definition.DataErrorResults("user id"),
+				},
+			},
+		},
+		{
 			Path:        "/islogin",
 			Description: "check login status",
 			Definitions: []definition.Definition{
