@@ -30,6 +30,9 @@ func init() {
 	checkError(err)
 	configInfo.SessionName, err = cfg.GlobalSection().String("SessionName")
 	checkError(err)
+	port, err := cfg.GlobalSection().Int("Port")
+	checkError(err)
+	configInfo.Port = uint16(port)
 	// 创建session处理器
 	session.Register("redis", sessionext.NewRediSessionContainer)
 	sessionContainer, err = session.NewSessionContainer("redis", configInfo.LoginExpire, redisConnString)
