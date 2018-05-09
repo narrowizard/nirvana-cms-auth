@@ -58,6 +58,19 @@ func Logout(ctx context.Context) error {
 	return nil
 }
 
+func UpdatePassword(ctx context.Context, oldpwd, newpwd string) error {
+	var uid, succ = userID(ctx)
+	if !succ {
+		return meta.UnLoginError.Error()
+	}
+	var us = services.NewUserService()
+	var err = us.UpdatePassword(uid, oldpwd, newpwd)
+	if err != nil {
+		return err
+	}
+	return nil
+}
+
 // userID returns user id from session info
 func userID(ctx context.Context) (int, bool) {
 	var httpContext = service.HTTPContextFrom(ctx)

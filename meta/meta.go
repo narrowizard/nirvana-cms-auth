@@ -14,6 +14,7 @@ var (
 	UnexpectedParamError  = errors.BadRequest.Build("Params:UnexpectedParamError", "unexpected param: ${paramName}.")
 	PasswordNotMatchError = errors.Forbidden.Build("Login:PasswordNotMatchError", "password not match account.")
 	UserForbiddenError    = errors.Forbidden.Build("Login:UserForbiddenError", "user ${account} is forbidden to login.")
+	UserBlockError        = errors.Forbidden.Build("User:UserBlockError", "you are blocked.")
 	UnLoginError          = errors.Forbidden.Build("Login:UnLoginError", "need login.")
 	UnAuthorizedError     = errors.Forbidden.Build("Auth:UnAuthorizedError", "you are not allowed to this api.")
 	SessionCreateError    = errors.InternalServerError.Build("Session:SessionCreateError", "session create error.")

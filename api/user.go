@@ -113,5 +113,34 @@ var User = definition.Descriptor{
 				},
 			},
 		},
+		{
+			Path:        "/updatepassword",
+			Description: "update user password",
+			Definitions: []definition.Definition{
+				{
+					Method:   definition.Update,
+					Function: users.UpdatePassword,
+					Consumes: []string{definition.MIMEAll},
+					Produces: []string{definition.MIMEJSON},
+					Parameters: []definition.Parameter{
+						{
+							Source:      definition.Form,
+							Name:        "oldpwd",
+							Description: "old password",
+						},
+						{
+							Source:      definition.Form,
+							Name:        "newpwd",
+							Description: "new password",
+						},
+					},
+					Results: []definition.Result{
+						{
+							Destination: definition.Error,
+						},
+					},
+				},
+			},
+		},
 	},
 }
