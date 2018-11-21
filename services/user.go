@@ -1,9 +1,10 @@
 package services
 
 import (
-	"nirvana-cms-auth/meta"
-	"nirvana-cms-auth/models"
 	"strings"
+
+	"github.com/narrowizard/nirvana-cms-auth/meta"
+	"github.com/narrowizard/nirvana-cms-auth/models"
 
 	"github.com/caicloud/nirvana/log"
 )

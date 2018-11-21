@@ -1,7 +1,7 @@
 package services
 
 import (
-	"nirvana-cms-auth/models"
+	"github.com/narrowizard/nirvana-cms-auth/models"
 
 	"github.com/kdada/tinygo/session"
 	"github.com/narrowizard/tinygoext/sessionext"

@@ -1,7 +1,7 @@
 package api
 
 import (
-	"nirvana-cms-auth/controllers/users"
+	"github.com/narrowizard/nirvana-cms-auth/controllers/users"
 
 	"github.com/caicloud/nirvana/definition"
 	"github.com/caicloud/nirvana/operators/validator"

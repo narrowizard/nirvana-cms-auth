@@ -1,8 +1,8 @@
 package main
 
 import (
-	"nirvana-cms-auth/api"
-	"nirvana-cms-auth/services"
+	"github.com/narrowizard/nirvana-cms-auth/api"
+	"github.com/narrowizard/nirvana-cms-auth/services"
 
 	"github.com/caicloud/nirvana"
 	"github.com/caicloud/nirvana/log"

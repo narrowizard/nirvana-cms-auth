@@ -2,8 +2,9 @@ package users
 
 import (
 	"context"
-	"nirvana-cms-auth/meta"
-	"nirvana-cms-auth/services"
+
+	"github.com/narrowizard/nirvana-cms-auth/meta"
+	"github.com/narrowizard/nirvana-cms-auth/services"
 
 	"github.com/caicloud/nirvana/log"
 	"github.com/caicloud/nirvana/service"
