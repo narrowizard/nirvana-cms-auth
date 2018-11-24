@@ -7,7 +7,6 @@ require (
 	github.com/go-playground/locales v0.12.1 // indirect
 	github.com/go-playground/universal-translator v0.16.0 // indirect
 	github.com/go-sql-driver/mysql v1.4.1
-	github.com/gomodule/redigo v2.0.0+incompatible // indirect
 	github.com/jinzhu/gorm v1.9.1
 	github.com/jinzhu/inflection v0.0.0-20180308033659-04140366298a // indirect
 	github.com/jinzhu/now v0.0.0-20181116074157-8ec929ed50c3 // indirect
@@ -17,4 +16,7 @@ require (
 	github.com/narrowizard/tinygoext v0.0.0-20181109101901-da14f8fdbbb6
 	gopkg.in/go-playground/assert.v1 v1.2.1 // indirect
 	gopkg.in/go-playground/validator.v9 v9.23.0 // indirect
+	gopkg.in/redsync.v1 v1.1.1 // indirect
 )
+
+replace gopkg.in/redsync.v1 => github.com/go-redsync/redsync v1.1.1
