@@ -78,9 +78,10 @@ func (this *UserService) CheckURL(uid int, url string) error {
 	var c struct {
 		C int
 	}
-	var err = this.DB.Raw(`select count(*) c from user_menus um 
-											join menus m on um.menu_id = m.id 
-											where um.user_id=? and m.url=? and um.status=1 and m.status=1`, uid, url).Scan(&c).Error
+	var err = this.DB.Raw(`select count(*) c from role_menus rm 
+											join users u on rm.role_id = u.role_id
+											join menus m on rm.menu_id = m.id 
+											where u.id=? and m.url=? and rm.status=1 and m.status=1 and u.status=1`, uid, url).Scan(&c).Error
 	if err != nil {
 		log.Error(err)
 		return meta.TableQueryError.Error("user_menus")
