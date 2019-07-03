@@ -1,0 +1,24 @@
+language: go
+
+go:
+- 1.12
+
+go_import_path: github.com/narrowizard/nirvana-cms-auth
+
+branches:
+  only:
+  - master
+
+env:
+  global:
+    - secure: "EjKEOrG8agbYVlA/mc+E3v6MNgjMkQpqjP+kfQs5YiNiwyW3sjNcz3XWznNzt5/aux7WlIGNXBy4puZm2lDqVx9Nr6C6cvAOlHZQPNN9yZmD7qm590glBvEbYTY9g2ZIl6XzD9FuN6EumLn9fOUGmQTVur3z5UFhwadTFaJSGuXb223TGyoVoEBvVkw0vM6fTsKSGDmckcuQlCJV7Ld7bd6YXdoDQeJMZMJL7iOrzIvoyk45Xii4M/BVsU2XWzIow6K3sagwKZzlqXsAEeYb2vVnCZ1/NLSdrdvb3hk2MLEEP2IYaMAoyMWwsLLiiebXwUFvb8f0WotKtv4JkoSwbscURBxi5E/JIc2T1e1wla9tZ1IbaehTDpuvYLJidl6fCsI+iupM2tQi3WnlxDQYeaZ49iCpp6bu8Q/nhQO3Qo3n6tMHsBf1iqsGrr5zSLjTucaInMBgJWr4VfOpCcTMvhIsIzDPAYqnYyLlivlnzr/hpyoeIn5i2o/YepKEKcMz4fk7r9qfAluyjBg5u4/p8YUsKL5yisiDtipCVFQpZHJi6EG1d/E5UxPMZ5/rQQkXA7fClNTNOb8PLrZSaaapVx64YbnDRRuTYsFLF8jOYm+qJjo6F/K1htXgfT5oaj9jaMjaGh6K6oonNns3hfJCGXJ/baISZBW69laE/NUmdiY="
+    - secure: "6eQgwe23Lh43d+g/Q8ZV2gtOBZWF2P55xAitjPZMf7TcbaQ33OrM2HIyuICoRxgEO3ggQk7xtfmbMIt8/TIkM6Vm4QrA1dBpFHQ2P2fnW161bB3v8rUN1hzz+Z2poGOz5Qxb3a6h8mlL7Sx+adC/3kJPsT+vfI00zpYj+zcvHdMKSwZGuMRS2XqX30BxA8v7eSgflbCGDuDhdOQWqTMnyyHoB9Uemuu1nCnGBCYMgxCWArRb94Nj2nzhOQF9Cex6tAUZ2yvfaKm6+9Ot8Ds/Lei5naPb9NGu0iOUtUh2rJ/NPO5hw09D/WbB6g9GGO82jBvxcK9Z+sRQ4eO4Kw9eOPgHhnLlppFQiWbAvQNGXWASgo0cOMbG6JWc2TFdvyVfAqaQg7yuiAaR30GY/rF/LLHDQhL+q3COHjYwxx1LBEt2S4wrg2wmJRKBUl5xhT6XaC+2hCbRH9hjx8TxauLq4xO97cm+5rqupVLzBtznLLrkPsIyYtvbINlUJIY0Rcum4wjYMzA4jU164AmguMWYadM/TKJEidROpecNEnmO+YFzykm+F6BSwQrIeEuJW90Mcae5pzCgOdY4tNBWtH8DFXjFfBgfFg135jUluvZUbJN3ditnFqfoXjdoX7azJq3zRn+TewosYWKyfdJlsCqoSInuAU2Q/9z1HsLmNOfjJwE="
+    - COMMIT=${TRAVIS_COMMIT::8}
+after_success:
+  - docker login -u $DOCKER_USER -p $DOCKER_PASS
+  - export REPO=narrowizard/nirvana-cms-auth
+  - export TAG=`if [ "$TRAVIS_BRANCH" == "master" ]; then echo "latest"; else echo $TRAVIS_BRANCH ; fi`
+  - docker build -f Dockerfile -t $REPO:$COMMIT .
+  - docker tag $REPO:$COMMIT $REPO:$TAG
+  - docker tag $REPO:$COMMIT $REPO:travis-$TRAVIS_BUILD_NUMBER
+  - docker push $REPO
