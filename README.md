@@ -1,4 +1,5 @@
 # nirvana-cms-auth
+[![Build Status](https://travis-ci.org/narrowizard/nirvana-cms-auth.svg?branch=master)](https://travis-ci.org/narrowizard/nirvana-cms-auth)  
 authorize api for nirvane cms.
 
 ## summary
