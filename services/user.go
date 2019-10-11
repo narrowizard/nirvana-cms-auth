@@ -5,6 +5,7 @@ import (
 
 	"github.com/narrowizard/nirvana-cms-auth/meta"
 	"github.com/narrowizard/nirvana-cms-auth/models"
+	"github.com/narrowizard/nirvana-cms-auth/utils"
 
 	"github.com/caicloud/nirvana/log"
 )
@@ -86,8 +87,23 @@ func (this *UserService) CheckURL(uid int, url string) error {
 		log.Error(err)
 		return meta.TableQueryError.Error("user_menus")
 	}
-	if c.C == 0 {
-		return meta.UnAuthorizedError.Error()
+	if c.C > 0 {
+		return nil
 	}
-	return nil
+	// 附加校验包含参数的路由
+	var menus []models.Menu
+	err = this.DB.Raw(`select m.* from role_menus rm
+									join users u on rm.role_id = u.role_id
+									join menus m on rm.menu_id = m.id
+									where u.id=? and rm.status=1 and m.status=1 and u.status=1 and m.url like ?`, uid, `%{%`).Scan(&menus).Error
+	if err != nil {
+		log.Error(err)
+		return meta.TableQueryError.Error("user_menus")
+	}
+	for _, v := range menus {
+		if utils.MatchURL(v.URL, url) {
+			return nil
+		}
+	}
+	return meta.UnAuthorizedError.Error()
 }
