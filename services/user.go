@@ -112,3 +112,12 @@ func (this *UserService) CheckURL(uid int, url string) error {
 	}
 	return meta.UnAuthorizedError.Error()
 }
+
+// URLCheckLog url校验日志
+func (this *UserService) URLCheckLog(uid int, url, ip string) error {
+	var ucl models.URLCheckLog
+	ucl.IP = ip
+	ucl.URL = url
+	ucl.UserID = uint(uid)
+	return this.DB.Create(&ucl).Error
+}

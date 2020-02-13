@@ -80,6 +80,7 @@ var User = definition.Descriptor{
 							Name:        "request",
 							Description: "request url",
 						},
+						definition.HeaderParameterFor("X-Forwarded-For", "client ip"),
 					},
 					Results: definition.DataErrorResults("user id"),
 				},

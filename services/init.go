@@ -48,6 +48,7 @@ func checkError(err error) {
 
 func createDatabase() {
 	db.AutoMigrate(&models.UserLogin{})
+	db.AutoMigrate(&models.URLCheckLog{})
 }
 
 // ConfigInfo return app config info

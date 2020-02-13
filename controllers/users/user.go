@@ -32,14 +32,23 @@ func Login(ctx context.Context, account, password, ip string) (map[string]string
 	return headers, nil
 }
 
-func Authorize(ctx context.Context, request string) (int, error) {
+func Authorize(ctx context.Context, request, ip string) (int, error) {
 	var uid, succ = userID(ctx)
 	if !succ {
 		return 0, meta.UnLoginError.Error()
 	}
 	var us = services.NewUserService()
-	return uid, us.CheckURL(uid, request)
-	// return uid, nil
+	var err = us.CheckURL(uid, request)
+	if err != nil {
+		return 0, err
+	}
+	if ip == "" {
+		var httpCtx = service.HTTPContextFrom(ctx)
+		ip = httpCtx.Request().RemoteAddr
+	}
+	// 增加日志
+	go us.URLCheckLog(uid, request, ip)
+	return uid, nil
 }
 
 func IsLogin(ctx context.Context, ssid string) (bool, error) {
