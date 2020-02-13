@@ -28,7 +28,7 @@ func NewUserService() *UserService {
 }
 
 // Login returns user id
-func (this *UserService) Login(account, password string) (uint, error) {
+func (this *UserService) Login(account, password, ip string) (uint, error) {
 	// scan到slice中, 未查询到数据不会报错.
 	// scan到struct中, 未查询到数据会报record not found的错误.
 	var u []models.User
@@ -43,6 +43,11 @@ func (this *UserService) Login(account, password string) (uint, error) {
 	if u[0].Status == 2 {
 		return 0, meta.UserForbiddenError.Error(account)
 	}
+	// 登录成功 创建登录日志
+	var ul models.UserLogin
+	ul.UserID = u[0].ID
+	ul.IP = ip
+	this.DB.Create(&ul)
 	return u[0].ID, nil
 }
 

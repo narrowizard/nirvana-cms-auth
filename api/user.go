@@ -33,6 +33,7 @@ var User = definition.Descriptor{
 							Description: "password",
 							Operators:   []definition.Operator{validator.String("min=6"), validator.String("max=20")},
 						},
+						definition.HeaderParameterFor("X-Forwarded-For", "client ip"),
 					},
 					Results: []definition.Result{
 						{

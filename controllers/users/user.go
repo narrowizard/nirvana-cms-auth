@@ -10,9 +10,13 @@ import (
 	"github.com/caicloud/nirvana/service"
 )
 
-func Login(ctx context.Context, account, password string) (map[string]string, error) {
+func Login(ctx context.Context, account, password, ip string) (map[string]string, error) {
+	if ip == "" {
+		var httpCtx = service.HTTPContextFrom(ctx)
+		ip = httpCtx.Request().RemoteAddr
+	}
 	var us = services.NewUserService()
-	var uid, err = us.Login(account, password)
+	var uid, err = us.Login(account, password, ip)
 	if err != nil {
 		return nil, err
 	}
