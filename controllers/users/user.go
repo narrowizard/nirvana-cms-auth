@@ -2,6 +2,7 @@ package users
 
 import (
 	"context"
+	"strings"
 
 	"github.com/narrowizard/nirvana-cms-auth/meta"
 	"github.com/narrowizard/nirvana-cms-auth/services"
@@ -14,6 +15,9 @@ func Login(ctx context.Context, account, password, ip string) (map[string]string
 	if ip == "" {
 		var httpCtx = service.HTTPContextFrom(ctx)
 		ip = httpCtx.Request().RemoteAddr
+	} else {
+		var ips = strings.Split(ip, ",")
+		ip = ips[0]
 	}
 	var us = services.NewUserService()
 	var uid, err = us.Login(account, password, ip)
@@ -45,6 +49,9 @@ func Authorize(ctx context.Context, request, ip string) (int, error) {
 	if ip == "" {
 		var httpCtx = service.HTTPContextFrom(ctx)
 		ip = httpCtx.Request().RemoteAddr
+	} else {
+		var ips = strings.Split(ip, ",")
+		ip = ips[0]
 	}
 	// 增加日志
 	go us.URLCheckLog(uid, request, ip)
